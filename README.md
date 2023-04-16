@@ -6,6 +6,9 @@ Blustaq Pre-Interview Code Challenge - The Poet
 This program uses the poetrydb API (https://github.com/thundercomb/poetrydb/blob/master/README.md) to query for poems by author and title. It also allows the user to specify which output fields they wish to see results for.
 
 
+![Query Screenshot](poet.png)
+
+
 ## Usage
 Run `npm start` in the `/the-poet` directory. 
 The webpage is automatically hosted at localhost:3000. React also allows for using a different port at startup if the 3000 port is already being used, just press `y` when prompted and go to the address shown in the terminal.
