@@ -19,6 +19,8 @@ The webpage is automatically hosted at localhost:3000. React also allows for usi
 - Implement poemcount functionaliity of the poetrydb API to allow user to limit results
 - Implement random functionality of the poetrydb API
 - Allow user to select format of output (text or json) / download results
+- Allow user to decide if search should be exact match or not
+- Add input validation to prevent user from making queries that result in errors
 - Make output prettier
     - Show the results in a table
     - Allow further sorting/searching of results
