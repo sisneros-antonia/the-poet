@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -22,11 +22,7 @@ const OUTPUT_FIELDS = [
 
 export default function Form({ setResults }) {
   const [author, setAuthor] = useState('');
-  const [authorError, setAuthorError] = useState(false);
-  const [authorHelperText, setAuthorHelperText] = useState('');
   const [title, setTitle] = useState('');
-  const [titleError, setTitleError] = useState(false);
-  const [titleHelperText, setTitleHelperText] = useState('');
   const [outputFields, setOutputFields] = useState(OUTPUT_FIELDS);
 
   const handleAuthorChange = (event) => {
@@ -48,9 +44,23 @@ export default function Form({ setResults }) {
   };
 
   const handleSubmit = () => {
+    const uri = constructUri();
+    axios.get(uri)
+    .then((response) => {
+      setResults(response.data);
+    })
+    .catch((error) => {
+      setResults(error)
+    })
+  }
+
+  const constructUri = () => {
+    // construct URI
     let uri = `https://poetrydb.org`;
     let searchParams = [];
     let searchTerms = [];
+
+    // add search params
     if (title !== '') {
       searchParams.push('title');
       searchTerms.push(title);
@@ -65,12 +75,16 @@ export default function Form({ setResults }) {
         uri += `${searchParam},`;
       }
     }
+
+    // add search terms
     if (searchTerms.length > 0) {
       uri += '/';
       for (const searchTerm of searchTerms) {
         uri += `${searchTerm};`;
       }
     }
+
+    // add output fields
     if (outputFields.length > 0) {
       uri += '/';
       for (const [i, outputField] of outputFields.entries()) {
@@ -80,13 +94,8 @@ export default function Form({ setResults }) {
         }
       }
     }
-    axios.get(uri)
-    .then((response) => {
-      setResults(response.data);
-    })
-    .catch((error) => {
-      setResults(error)
-    })
+
+    return uri;
   }
 
   return (
@@ -102,16 +111,12 @@ export default function Form({ setResults }) {
       <TextField
         label="Author"
         value={author}
-        error={authorError}
-        helperText={authorHelperText}
         onChange={handleAuthorChange}
       />
       <br />
       <TextField
         label="Title"
         value={title}
-        error={titleError}
-        helperText={titleHelperText}
         onChange={handleTitleChange}
       />
       <br />
